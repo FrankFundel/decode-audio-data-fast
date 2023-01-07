@@ -86,12 +86,14 @@ async function getFileAudioBuffer(file, audioCtx, options = {}) {
     return getFileAudioBuffer(file, audioCtx, { native: true });
   }
   
-  const audioBuffer = await getAudioBuffer(arrayBuffer, audioCtx);
+  const audioBuffer = await getAudioBuffer(arrayBuffer, audioCtx, options);
   
   return audioBuffer;
 }
 
-async function getAudioBuffer(arrayBuffer, audioCtx) {
+async function getAudioBuffer(arrayBuffer, audioCtx, options = {}) {
+  const { native = false, concurrency = CONCURRENCY } = options;
+
   const view = new DataView(arrayBuffer);
 
   const tags = parser.readTags(view);
