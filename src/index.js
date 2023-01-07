@@ -85,7 +85,13 @@ async function getFileAudioBuffer(file, audioCtx, options = {}) {
   if (safari) {
     return getFileAudioBuffer(file, audioCtx, { native: true });
   }
+  
+  const audioBuffer = await getAudioBuffer(arrayBuffer, audioCtx);
+  
+  return audioBuffer;
+}
 
+async function getAudioBuffer(arrayBuffer, audioCtx) {
   const view = new DataView(arrayBuffer);
 
   const tags = parser.readTags(view);
@@ -153,4 +159,4 @@ async function getFileAudioBuffer(file, audioCtx, options = {}) {
   return audioBuffer;
 }
 
-export { getFileAudioBuffer };
+export { getFileAudioBuffer, getAudioBuffer };
